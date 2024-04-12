@@ -2,7 +2,7 @@ from flask import Flask, url_for, redirect, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
 from util import create_app, db
-from models import persona, relacion
+from models import persona, relacion, evaluacion
 from datetime import datetime
 import pandas as pd
 
@@ -71,7 +71,35 @@ def evaluar(documento_empleado, documento_jefe):
         empleado = persona.query.filter_by(per_documento=documento_empleado).first()
         return render_template('formulario.html', jefe = jefe, empleado = empleado, fecha = datetime.now().date())
     else:
-        pass
+        if documento_empleado != documento_jefe:
+            tipo = "EV"
+        else:
+            tipo = "AV"
+        for i in range(1, 12):
+            data = {
+                "tipo": tipo,
+                "documento_empleado": documento_empleado,
+                "documento_jefe": documento_jefe,
+                "pregunta": str(i),
+                "valor": request.form["pregunta_" + str(i)]
+
+            }
+            e = evaluacion(data)
+            db.session.add(e)
+        db.session.commit()
+        return redirect('/verificacion/'+documento_jefe+'/'+documento_jefe)
+
+@app.route('/ver_eval/<documento_empleado>/<documento_jefe>', methods=['GET', 'POST'])
+def ver_eval(documento_empleado, documento_jefe):
+    if request.method == 'GET':
+        jefe = persona.query.filter_by(per_documento=documento_jefe).first()
+        empleado = persona.query.filter_by(per_documento=documento_empleado).first()
+        eval = evaluacion.query.filter_by(evl_documento_jefe = documento_jefe, evl_documento_empleado = documento_empleado).all()
+        
+        return render_template('formulario_ver.html', jefe = jefe, empleado = empleado, fecha = datetime.now().date(), resultado = eval)
+    else:
+        return redirect('/verificacion/'+documento_jefe+'/'+documento_jefe)
+
 
 @app.route('/formulario')
 def formulario():

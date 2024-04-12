@@ -7,26 +7,12 @@
       <meta name="author" content="Talento Humano" />
       <meta name="title" content="Evuluación periodo de prueba" />
       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilos2.css') }}">
-      <script>
-        function validarRango(input) {
-            var valor = parseInt(input.value);
-            var min = parseInt(input.min);
-            var max = parseInt(input.max);
-        
-            var mensajeError = document.getElementById("mensaje-error");
-        
-            if (valor < min || valor > max) {
-                mensajeError.style.display = "block";
-                input.value = min;  // Opcional: Restablecer el valor al mínimo permitido
-            } else {
-                mensajeError.style.display = "none";
-            }
-        }
-        </script>
+      
   </head>
 
   <body>
-    <form action="/evaluar/{{empleado["per_documento"]}}/{{jefe["per_documento"]}}" method="post">
+    
+    <form action="/validar/{{empleado["per_documento"]}}/{{jefe["per_documento"]}}" method="post">
 
     <table border="0" cellpadding="0" cellspacing="0" width="100%" class="bordeada">
         <tbody>
@@ -48,7 +34,7 @@
           
         </tbody>
       </table>
-      <br>
+      <br><br><br>
 
       <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0" width="100%">
         <tbody>
@@ -78,7 +64,7 @@
 
         </tbody>
       </table>
-      <br>
+      <br><br><br>
 
       <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0" width="100%">
         <tbody>
@@ -104,106 +90,165 @@
           
         </tbody>
       </table>
-      <br>
+      <br><br><br>
 
       <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0" width="100%">
         <tbody>
           <tr>
-            <td colspan="3"><h3>3. SECCIÓN DE AUTOEVALUACIÓN DEL SERVIDOR Y EVALUACIÓN DEL SUPERIOR JERARQUICO</h3></td>
+            <td colspan="5"><h3>3. SECCIÓN DE AUTOEVALUACIÓN DEL SERVIDOR Y EVALUACIÓN DEL SUPERIOR JERARQUICO</h3></td>
           </tr>
           
           <tr>
             <th class="d b">COMPROMISOS LABORALES</th>
             <th class="d b">MAX. PUNT</th>
-            <th class="d b">EVALUACION</th>
-            
+            <th class="d b">AUTOEVALUACIÓN</th>
+            <th class="d b">EVALUADOR (SUPERIOR JERÁRQUICO)</th>
+            <th class="d b">PROMEDIO</th>
           </tr>
           <tr>
             <td class="d">LIDERAZGO Y PLANEACION</td>
             <td class="d b">14</td>
-            <td class="d b"><input type="number" name="pregunta_1" min="0" max="14" oninput="validarRango(this)"></td>
+            <td class="d b">0</td>
+            <td class="d b">{{resultado[0].evl_valor}}</td>
+            <td class="d b">{{resultado[0].evl_valor/2}}</td>
           </tr>
           <tr>
             <td class="d">TOMA DE DECISIONES</td>
             <td class="d b">14</td>
-            <td class="d b"><input type="number" name="pregunta_2" min="0" max="14" oninput="validarRango(this)"></td>
+            <td class="d b">0</td>
+            <td class="d b">{{resultado[1].evl_valor}}</td>
+            <td class="d b">{{resultado[1].evl_valor}}</td>
           </tr>
           <tr>
             <td class="d">CUMPLIMIENTO Y PUNTUALIDAD</td>
             <td class="d b">13</td>
-            <td class="d b"><input type="number" name="pregunta_3" min="0" max="13" oninput="validarRango(this)"></td>
+            <td class="d b">0</td>
+            <td class="d b">{{resultado[2].evl_valor}}</td>
+            <td class="d b">{{resultado[2].evl_valor}}/2</td>
           </tr>
           <tr>
             <td class="d">SERVICIO AL CIUDADANO</td>
             <td class="d b">13</td>
-            <td class="d b"><input type="number" name="pregunta_4" min="0" max="13" oninput="validarRango(this)"></td>
+            <td class="d b">0</td>
+            <td class="d b">{{resultado[3].evl_valor}}</td>
+            <td class="d b">{{resultado[3].evl_valor}}/2</td>
+            
           </tr>
           <tr>
             <td class="d">MANEJO DE LOS RECURSOS</td>
             <td class="d b">13</td>
-            <td class="d b"><input type="number" name="pregunta_5" min="0" max="13" oninput="validarRango(this)"></td>
+            <td class="d b">0</td>
+            <td class="d b">{{resultado[4].evl_valor}}</td>
+            <td class="d b">{{resultado[4].evl_valor}}/2</td>
           </tr>
           <tr>
             <td class="d">CONOCIMIENTO DE SUS FUNCIONES</td>
             <td class="d b">13</td>
-            <td class="d b"><input type="number" name="pregunta_6" min="0" max="13" oninput="validarRango(this)"></td>
+            <td class="d b">0</td>
+            <td class="d b">{{resultado[5].evl_valor}}</td>
+            <td class="d b">{{resultado[5].evl_valor}}/2</td>
           </tr>
-          
-          
+          <tr>
+            <td class="d" colspan="2">SUBTOTAL </td>
+            <td class="d b">0</td>
+            <td class="d b">{{ resultado[0].evl_valor + resultado[1].evl_valor + resultado[2].evl_valor + resultado[3].evl_valor + resultado[4].evl_valor + resultado[5].evl_valor}}</td>
+            <td class="d b">{{ (resultado[0].evl_valor + resultado[1].evl_valor + resultado[2].evl_valor + resultado[3].evl_valor + resultado[4].evl_valor + resultado[5].evl_valor)/2}}</td>
+          </tr>
+          <tr>
+            <td class="d r" colspan="3">COMPROMISOS LABORALES</td>
+            <td class="d b" colspan="3">MAX {{ resultado[0].evl_valor + resultado[1].evl_valor + resultado[2].evl_valor + resultado[3].evl_valor + resultado[4].evl_valor + resultado[5].evl_valor}} PTS</td>
+          </tr>
         </tbody>
       </table>
-      <br>
+      <br><br><br>
 
       <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0" width="100%">
         <tbody>
           <tr>
             <th class="d b">COMPROMISOS COMPORTARMENTALES</th>
             <th class="d b">MAX. PUNT</td>
-            <th class="d b">EVALUACIÓN</td>
+            <th class="d b">AUTOEVALUACIÓN</td>
+            <th class="d b">EVALUADOR (SUPERIOR JERÁRQUICO)</td>
+            <th class="d b">PROMEDIO</td>
           </tr>
           <tr>
             <td class="d">ETICA Y RESPONSABILIDAD</td>
             <td class="d b">7</td>
-            <td class="d b"><input type="number" name="pregunta_7" min="0" max="7" oninput="validarRango(this)"></td>
-            
+            <td class="d b">0</td>
+            <td class="d b">{{resultado[6].evl_valor}}</td>
+            <td class="d b">{{resultado[6].evl_valor/2}}</td>
           </tr>
           <tr>
             <td class="d">HONESTIDAD Y TRANSPARENCIA</td>
             <td class="d b">7</td>
-            <td class="d b"><input type="number" name="pregunta_8" min="0" max="7" oninput="validarRango(this)"></td>
-            
+            <td class="d b">0</td>
+            <td class="d b">{{resultado[7].evl_valor}}</td>
+            <td class="d b">{{resultado[7].evl_valor/2}}</td>
           </tr>
           <tr>
             <td class="d">COMPROMISO CON LA INSTITUCIÓN</td>
             <td class="d b">6</td>
-            <td class="d b"><input type="number" name="pregunta_9" min="0" max="6" oninput="validarRango(this)"></td>
-            
+            <td class="d b">0</td>
+            <td class="d b">{{resultado[8].evl_valor}}</td>
+            <td class="d b">{{resultado[8].evl_valor/2}}</td>
           </tr>
           
-          
+          <tr>
+            <td class="d" colspan="2">SUBTOTAL </td>
+            <td class="d b">0</td>
+            <td class="d b">{{resultado[6].evl_valor + resultado[7].evl_valor + resultado[8].evl_valor}}</td>
+            <td class="d b">{{(resultado[6].evl_valor + resultado[7].evl_valor + resultado[8].evl_valor)/2}}</td>
+            
+          </tr>
+          <tr>
+            <td class="d r" colspan="3">COMPROMISOS COMPORTARMENTALES</td>
+            <td class="d b" colspan="2">MAX {{resultado[6].evl_valor + resultado[7].evl_valor + resultado[8].evl_valor}} PTS</td>
+          </tr>
         </tbody>
       </table>
-      <br>
+      <br><br><br>
 
-     
+      <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0" width="100%">
+        <tbody>
+          <tr>
+            <th class="d b" colspan="2">NIVELES DE PUNTUACIÓN</th>
+            <th class="d b">TOTAL GENERAL</th>
+          </tr>
+          <tr>
+            <td class="d">SOBRESALIENTE</td>
+            <td class="d r">Entre 90 y 100</td>
+            <td class="d b" rowspan="3"><h1>{{resultado[0].evl_valor + resultado[1].evl_valor + resultado[2].evl_valor + resultado[3].evl_valor + resultado[4].evl_valor + resultado[5].evl_valor + resultado[6].evl_valor + resultado[7].evl_valor + resultado[8].evl_valor}} PTS</h1></td>
+          </tr>
+          <tr>
+            <td class="d">SATISFACTORIO</td>
+            <td class="d r">Entre 50 y 89</td>
+          </tr>
+          <tr>
+            <td class="d">DEFICIENTE</td>
+            <td class="d r">Entre 0 y 49</td>
+          </tr>
+        </tbody>
+      </table>
+      <br><br><br>
+
       <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0" width="100%">
         <tbody>
           <tr>
             <th class="d b">¿QUÉ APORTES CONSIDERA QUE HA TENIDO PARA EL CUMPLIMIENTO DE METAS DE ACREDITACIÓN INSTITUCIONAL?</th>
           </tr>
           <tr>
-            <td class="d b">Espacio solo para diligenciamiento del funcionario evaluado <br> <textarea name="pregunta_10" cols="150" rows="5"></textarea></td>
+            <td class="d b">{{resultado[9].evl_valor}} </td>
           </tr>
           <tr>
             <th class="d b">¿EN QUÉ CONSIDERA QUE EL FUNCIONARIO QUE DEBE SER CAPACITADO?</th>
           </tr>
           <tr>
-            <td class="d b">Espacio solo para diligenciamiento del funcionario evaluado <br> <textarea name="pregunta_11" cols="150" rows="5"></textarea></td>
+            <td class="d b">{{resultado[10].evl_valor}} </td>
           </tr>
           
         </tbody>
       </table>
-      <br>
+      <br><br><br>
 
       <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0" width="100%">
         <tbody>
