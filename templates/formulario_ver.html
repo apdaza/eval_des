@@ -11,7 +11,21 @@
   </head>
 
   <body>
-    
+    {% set total_av = resultado2[0].evl_valor + resultado2[1].evl_valor + resultado2[2].evl_valor + resultado2[3].evl_valor + resultado2[4].evl_valor + resultado2[5].evl_valor %}    
+    {% set total_ev = resultado[0].evl_valor + resultado[1].evl_valor + resultado[2].evl_valor + resultado[3].evl_valor + resultado[4].evl_valor + resultado[5].evl_valor %}
+    {% if total_av > total_ev%}
+    {% set mayor = total_av %}
+    {% else %}
+    {% set mayor = total_ev %}
+    {% endif %}
+
+    {% set total_av2 = resultado2[6].evl_valor + resultado2[7].evl_valor + resultado2[8].evl_valor  %}    
+    {% set total_ev2 = resultado[6].evl_valor + resultado[7].evl_valor + resultado[8].evl_valor %}
+    {% if total_av2 > total_ev2%}
+    {% set mayor2 = total_av2 %}
+    {% else %}
+    {% set mayor2 = total_ev2 %}
+    {% endif %}
     <form action="/validar/{{empleado["per_documento"]}}/{{jefe["per_documento"]}}" method="post">
 
     <table border="0" cellpadding="0" cellspacing="0" width="100%" class="bordeada">
@@ -108,55 +122,56 @@
           <tr>
             <td class="d">LIDERAZGO Y PLANEACION</td>
             <td class="d b">14</td>
-            <td class="d b">0</td>
+            <td class="d b">{{resultado2[0].evl_valor}}</td>
             <td class="d b">{{resultado[0].evl_valor}}</td>
-            <td class="d b">{{resultado[0].evl_valor/2}}</td>
+            <td class="d b">{{(resultado[0].evl_valor + resultado2[0].evl_valor)/2}}</td>
           </tr>
           <tr>
             <td class="d">TOMA DE DECISIONES</td>
             <td class="d b">14</td>
-            <td class="d b">0</td>
+            <td class="d b">{{resultado2[1].evl_valor}}</td>
             <td class="d b">{{resultado[1].evl_valor}}</td>
-            <td class="d b">{{resultado[1].evl_valor}}</td>
+            <td class="d b">{{(resultado[1].evl_valor+resultado2[1].evl_valor)/2}}</td>
           </tr>
           <tr>
             <td class="d">CUMPLIMIENTO Y PUNTUALIDAD</td>
             <td class="d b">13</td>
-            <td class="d b">0</td>
+            <td class="d b">{{resultado2[2].evl_valor}}</td>
             <td class="d b">{{resultado[2].evl_valor}}</td>
-            <td class="d b">{{resultado[2].evl_valor}}/2</td>
+            <td class="d b">{{(resultado[2].evl_valor+resultado2[2].evl_valor)/2}}</td>
           </tr>
           <tr>
             <td class="d">SERVICIO AL CIUDADANO</td>
             <td class="d b">13</td>
-            <td class="d b">0</td>
+            <td class="d b">{{resultado2[3].evl_valor}}</td>
             <td class="d b">{{resultado[3].evl_valor}}</td>
-            <td class="d b">{{resultado[3].evl_valor}}/2</td>
+            <td class="d b">{{(resultado[3].evl_valor+resultado2[3].evl_valor)/2}}</td>
             
           </tr>
           <tr>
             <td class="d">MANEJO DE LOS RECURSOS</td>
             <td class="d b">13</td>
-            <td class="d b">0</td>
+            <td class="d b">{{resultado2[4].evl_valor}}</td>
             <td class="d b">{{resultado[4].evl_valor}}</td>
-            <td class="d b">{{resultado[4].evl_valor}}/2</td>
+            <td class="d b">{{(resultado[4].evl_valor+resultado2[4].evl_valor)/2}}</td>
           </tr>
           <tr>
             <td class="d">CONOCIMIENTO DE SUS FUNCIONES</td>
             <td class="d b">13</td>
-            <td class="d b">0</td>
+            <td class="d b">{{resultado2[5].evl_valor}}</td>
             <td class="d b">{{resultado[5].evl_valor}}</td>
-            <td class="d b">{{resultado[5].evl_valor}}/2</td>
+            <td class="d b">{{(resultado[5].evl_valor+resultado2[5].evl_valor)/2}}</td>
           </tr>
+          
           <tr>
             <td class="d" colspan="2">SUBTOTAL </td>
-            <td class="d b">0</td>
-            <td class="d b">{{ resultado[0].evl_valor + resultado[1].evl_valor + resultado[2].evl_valor + resultado[3].evl_valor + resultado[4].evl_valor + resultado[5].evl_valor}}</td>
-            <td class="d b">{{ (resultado[0].evl_valor + resultado[1].evl_valor + resultado[2].evl_valor + resultado[3].evl_valor + resultado[4].evl_valor + resultado[5].evl_valor)/2}}</td>
+            <td class="d b">{{ total_av }}</td>
+            <td class="d b">{{ total_ev }}</td>
+            <td class="d b">{{ (total_av + total_ev)/2}}</td>
           </tr>
           <tr>
             <td class="d r" colspan="3">COMPROMISOS LABORALES</td>
-            <td class="d b" colspan="3">MAX {{ resultado[0].evl_valor + resultado[1].evl_valor + resultado[2].evl_valor + resultado[3].evl_valor + resultado[4].evl_valor + resultado[5].evl_valor}} PTS</td>
+            <td class="d b" colspan="3">MAX {{ mayor }} PTS</td>
           </tr>
         </tbody>
       </table>
@@ -174,35 +189,35 @@
           <tr>
             <td class="d">ETICA Y RESPONSABILIDAD</td>
             <td class="d b">7</td>
-            <td class="d b">0</td>
+            <td class="d b">{{resultado2[6].evl_valor}}</td>
             <td class="d b">{{resultado[6].evl_valor}}</td>
-            <td class="d b">{{resultado[6].evl_valor/2}}</td>
+            <td class="d b">{{(resultado[6].evl_valor+resultado2[6].evl_valor)/2}}</td>
           </tr>
           <tr>
             <td class="d">HONESTIDAD Y TRANSPARENCIA</td>
             <td class="d b">7</td>
-            <td class="d b">0</td>
+            <td class="d b">{{resultado2[7].evl_valor}}</td>
             <td class="d b">{{resultado[7].evl_valor}}</td>
-            <td class="d b">{{resultado[7].evl_valor/2}}</td>
+            <td class="d b">{{(resultado[7].evl_valor+resultado2[7].evl_valor)/2}}</td>
           </tr>
           <tr>
             <td class="d">COMPROMISO CON LA INSTITUCIÓN</td>
             <td class="d b">6</td>
-            <td class="d b">0</td>
+            <td class="d b">{{resultado2[8].evl_valor}}</td>
             <td class="d b">{{resultado[8].evl_valor}}</td>
-            <td class="d b">{{resultado[8].evl_valor/2}}</td>
+            <td class="d b">{{(resultado[8].evl_valor+resultado2[8].evl_valor)/2}}</td>
           </tr>
           
           <tr>
             <td class="d" colspan="2">SUBTOTAL </td>
-            <td class="d b">0</td>
-            <td class="d b">{{resultado[6].evl_valor + resultado[7].evl_valor + resultado[8].evl_valor}}</td>
-            <td class="d b">{{(resultado[6].evl_valor + resultado[7].evl_valor + resultado[8].evl_valor)/2}}</td>
+            <td class="d b">{{total_av2}}</td>
+            <td class="d b">{{total_ev2}}</td>
+            <td class="d b">{{(total_av2+total_ev2)/2}}</td>
             
           </tr>
           <tr>
             <td class="d r" colspan="3">COMPROMISOS COMPORTARMENTALES</td>
-            <td class="d b" colspan="2">MAX {{resultado[6].evl_valor + resultado[7].evl_valor + resultado[8].evl_valor}} PTS</td>
+            <td class="d b" colspan="2">MAX {{mayor2}} PTS</td>
           </tr>
         </tbody>
       </table>
@@ -217,7 +232,7 @@
           <tr>
             <td class="d">SOBRESALIENTE</td>
             <td class="d r">Entre 90 y 100</td>
-            <td class="d b" rowspan="3"><h1>{{resultado[0].evl_valor + resultado[1].evl_valor + resultado[2].evl_valor + resultado[3].evl_valor + resultado[4].evl_valor + resultado[5].evl_valor + resultado[6].evl_valor + resultado[7].evl_valor + resultado[8].evl_valor}} PTS</h1></td>
+            <td class="d b" rowspan="3"><h1>{{ (total_av2+total_ev2)/2 + (total_av+total_ev)/2 }} PTS</h1></td>
           </tr>
           <tr>
             <td class="d">SATISFACTORIO</td>
@@ -237,13 +252,13 @@
             <th class="d b">¿QUÉ APORTES CONSIDERA QUE HA TENIDO PARA EL CUMPLIMIENTO DE METAS DE ACREDITACIÓN INSTITUCIONAL?</th>
           </tr>
           <tr>
-            <td class="d b">{{resultado[9].evl_valor}} </td>
+            <td class="d b">{{resultado2[9].evl_valor}} </td>
           </tr>
           <tr>
             <th class="d b">¿EN QUÉ CONSIDERA QUE EL FUNCIONARIO QUE DEBE SER CAPACITADO?</th>
           </tr>
           <tr>
-            <td class="d b">{{resultado[10].evl_valor}} </td>
+            <td class="d b">{{resultado2[10].evl_valor}} </td>
           </tr>
           
         </tbody>

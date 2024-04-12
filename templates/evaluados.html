@@ -21,7 +21,7 @@
                     <td>{{ p['per_cargo'] }}</td>
                     <td>
                         <a href="/evaluar/{{ p['per_documento'] }}/{{ r['rel_documento_jefe'] }}">
-                            <img src="{{ url_for('static', filename='edit.png') }}" width="40px">
+                            <img src="{{ url_for('static', filename='evaluar.png') }}" width="40px">
                         </a>
                         <a href="/ver_eval/{{ p['per_documento'] }}/{{ r['rel_documento_jefe'] }}">
                             <img src="{{ url_for('static', filename='borrar.png') }}" width="40px">
@@ -29,7 +29,15 @@
                     </td>
                 </tr>
                 {% endfor %}
+                <tr>
+                    <td colspan="4" class="r">
+                        <a href="/evaluar/{{ documento }}/{{ documento }}">
+                            AUTOEVALUACIÓN <img src="{{ url_for('static', filename='edit.png') }}" width="40px">
+                        </a>
+                    </td>
+                </tr>
             </table>
+            
         </section>
     </body>
 </html>

@@ -57,9 +57,9 @@ def verificacion(documento, clave):
             # Iterar sobre los resultados
             for tabla1, tabla2 in resultados:
                 print(f"Tabla1: {tabla1.rel_documento_empleado}, Tabla2: {tabla2.per_nombre}")
-            return render_template('evaluados.html', resultados = resultados)
+            return render_template('evaluados.html', resultados = resultados, documento = documento)
         else:
-            return "evaluado"
+            return redirect('/evaluar/'+documento+'/'+documento)
     else: 
         return redirect(url_for('login'))
     #return render_template('index.html', usuario = usuario)
@@ -94,9 +94,10 @@ def ver_eval(documento_empleado, documento_jefe):
     if request.method == 'GET':
         jefe = persona.query.filter_by(per_documento=documento_jefe).first()
         empleado = persona.query.filter_by(per_documento=documento_empleado).first()
-        eval = evaluacion.query.filter_by(evl_documento_jefe = documento_jefe, evl_documento_empleado = documento_empleado).all()
+        eval = evaluacion.query.filter_by(evl_documento_jefe = documento_jefe, evl_documento_empleado = documento_empleado, evl_tipo = 'EV').all()
+        auto_eval = evaluacion.query.filter_by(evl_documento_jefe = documento_empleado, evl_documento_empleado = documento_empleado, evl_tipo = 'AV').all()
         
-        return render_template('formulario_ver.html', jefe = jefe, empleado = empleado, fecha = datetime.now().date(), resultado = eval)
+        return render_template('formulario_ver.html', jefe = jefe, empleado = empleado, fecha = datetime.now().date(), resultado = eval, resultado2 = auto_eval)
     else:
         return redirect('/verificacion/'+documento_jefe+'/'+documento_jefe)
 
