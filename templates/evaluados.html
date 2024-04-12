@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Acceso a datos</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilos.css') }}"
+    </head>
+    <body>
+        <section>
+            <h1>Funcionarios evaluados</h1>
+            <table border=1>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Ciudad</th>
+                    <th>Evaluar</th>
+                </tr>
+                {% for r, p in resultados %}
+                <tr>
+                    <td>{{ r['rel_documento_empleado'] }}</td>
+                    <td>{{ p['per_nombre'] }}</td>templates/formulario.html
+                    <td>{{ p['per_cargo'] }}</td>
+                    <td>
+                        <a href="/evaluar/{{ p['per_documento'] }}/{{ r['rel_documento_jefe'] }}">
+                            <img src="{{ url_for('static', filename='edit.png') }}" width="40px">
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </body>
+</html>

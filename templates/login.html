@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Formulario de login</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilos.css') }}"
+    </head>
+    <body>
+        <section>
+            <h1>Login Usuario</h1>
+            <form action="/login" method="post">
+                <p>
+                    <label for="documento">Documento: </label>
+                    <input type="text" name="documento">
+                </p>
+                <p>
+                    <label for="clave">Clave: </label>
+                    <input type="password" name="clave">
+                </p>
+                <p>
+                    <input type="submit" value="Enviar">
+                </p>
+            </form> 
+        </section>
+    </body>
+</html>
